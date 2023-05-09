@@ -40,18 +40,18 @@ def containers(remove_all, verbose):
 
 @click.command()
 @click.option(
-    "--pattern",
-    "-p",
-    help="Removes all images matching the given regex pattern",
+    "--pattern", "-p", help="Removes all images matching the given regex pattern"
 )
 @click.option(
-    "--except_version",
-    "-V",
-    help="Removes all images belonging to repository, "
-    + "'intechww-docker-local.jfrog.io/', except those with the given version.",
+    "--repository", "-r", help="Removes all images belonging to the given repository"
+)
+@click.option(
+    "--exclude",
+    "-e",
+    help="Excludes images matching the given regex pattern from being removed",
 )
 @click.option("--verbose", "-v", help="Show output", is_flag=True, flag_value=True)
-def images(pattern, except_version, verbose):
+def images(pattern, repository, exclude, verbose):
     """
     Removes unwanted images. Only dangling images are removed by default.
     """
@@ -59,11 +59,9 @@ def images(pattern, except_version, verbose):
         LOG.setLevel(logging.INFO)
     docker_images.remove_all_dangling(LOG)
     if pattern:
-        docker_images.remove_with_pattern(pattern, LOG)
-    if except_version:
-        docker_images.remove_all_intechww_images_except_with_version(
-            except_version, LOG
-        )
+        docker_images.remove_with_pattern(pattern, exclude, LOG)
+    if repository:
+        docker_images.remove_all_from_repository(repository, exclude, LOG)
 
 
 cli.add_command(containers)
