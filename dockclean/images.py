@@ -3,19 +3,23 @@ import re
 
 
 def remove_all_dangling(logger):
+
     logger.info("Removing all dangling images.")
+
     client = docker.from_env()
     images = client.images
-    current_images = images.list(filters={"dangling": True})
-    count = 0
-    for image in current_images:
-        try:
-            images.remove(image.id)
-            logger.debug(f"Removed image -> {image.id}")
-            count += 1
-        except:
-            logger.error(f"Exception occurred while removing image -> {image.id}")
-    logger.info(f"Total {count} dangling images removed.")
+
+    delete_images = images.prune(filters={"dangling": True})
+    images = delete_images['ImagesDeleted']
+
+    if images is not None:
+        [logger.debug(f"Removed image -> {image}") for image in images]
+        logger.info(f"Total {len(images)} dangling images removed.")
+
+    else:
+        logger.debug(f"There isn't any dangling image!")
+
+    logger.info(f"the space reclaimed after removing all dangling images is {delete_images['SpaceReclaimed']}")
 
 
 def remove_with_pattern(pattern, exclude, logger):
