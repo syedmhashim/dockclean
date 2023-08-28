@@ -7,6 +7,7 @@ import logging
 
 logging.basicConfig(format="%(message)s")
 LOG = logging.getLogger()
+LOG.setLevel(logging.INFO)
 
 
 @click.group("docker_clean_tool")
@@ -31,7 +32,7 @@ def containers(remove_all, verbose):
     Removes unwanted containers.
     """
     if verbose:
-        LOG.setLevel(logging.INFO)
+        LOG.setLevel(logging.DEBUG)
     if remove_all:
         docker_containers.remove_all_containers(LOG)
     else:
@@ -56,7 +57,7 @@ def images(pattern, repository, exclude, verbose):
     Removes unwanted images. Only dangling images are removed by default.
     """
     if verbose:
-        LOG.setLevel(logging.INFO)
+        LOG.setLevel(logging.DEBUG)
     docker_images.remove_all_dangling(LOG)
     if pattern:
         docker_images.remove_with_pattern(pattern, exclude, LOG)
