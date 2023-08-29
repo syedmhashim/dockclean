@@ -34,7 +34,7 @@ def remove_all_stopped_containers(logger):
         logger.info(f"There isn't any stopped container!")
 
     logger.info(
-        f"The space reclaimed after removing all stopped containers is {deleted_containers['ContainersDeleted']}"
+        f"The space reclaimed after removing all stopped containers is {deleted_containers['SpaceReclaimed']}"
     )
 
 

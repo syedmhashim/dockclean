@@ -7,9 +7,8 @@ def remove_all_dangling(logger):
     logger.info("Removing all dangling images.")
 
     client = docker.from_env()
-    images = client.images
+    delete_images = client.images.prune(filters={"dangling": True})
 
-    delete_images = images.prune(filters={"dangling": True})
     images = delete_images['ImagesDeleted']
 
     if images is not None:
