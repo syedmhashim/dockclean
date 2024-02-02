@@ -1,4 +1,4 @@
-# Docklean
+# DOCKCLEAN
 
 Docker is commonly used for packaging and shipping softwares. Developers who use docker frequently, often face the issue of disk running low due to docker taking up a lot of space in the shape of docker images, containers, volumes etc.
 
