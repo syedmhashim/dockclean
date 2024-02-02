@@ -2,12 +2,9 @@
 
 from dockclean import containers as docker_containers
 from dockclean import images as docker_images
-import click
+from dockclean.common import LOG
 import logging
-
-logging.basicConfig(format="%(message)s")
-LOG = logging.getLogger()
-LOG.setLevel(logging.INFO)
+import click
 
 
 @click.group("docker_clean_tool")
@@ -34,9 +31,9 @@ def containers(remove_all, verbose):
     if verbose:
         LOG.setLevel(logging.DEBUG)
     if remove_all:
-        docker_containers.remove_all_containers(LOG)
+        docker_containers.remove_all_containers()
     else:
-        docker_containers.remove_all_stopped_containers(LOG)
+        docker_containers.remove_all_stopped_containers()
 
 
 @click.command()
@@ -58,11 +55,11 @@ def images(pattern, repository, exclude, verbose):
     """
     if verbose:
         LOG.setLevel(logging.DEBUG)
-    docker_images.remove_all_dangling(LOG)
+    docker_images.remove_all_dangling()
     if pattern:
-        docker_images.remove_with_pattern(pattern, exclude, LOG)
+        docker_images.remove_with_pattern(pattern, exclude)
     if repository:
-        docker_images.remove_all_from_repository(repository, exclude, LOG)
+        docker_images.remove_all_from_repository(repository, exclude)
 
 
 cli.add_command(containers)
