@@ -5,7 +5,7 @@ with open("requirements.txt", "r") as f:
 
     setuptools.setup(
         name="dockclean",
-        version="1.0.0-beta",
+        version="1.0.0",
         author="Muhammad Hashim",
         author_email="hashim.muhammad9@gmail.com",
         description="Tool to clean docker images and containers",
