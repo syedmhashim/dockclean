@@ -1,8 +1,9 @@
 import docker
+from dockclean.common import LOG as logger
 import re
 
 
-def remove_all_dangling(logger):
+def remove_all_dangling():
 
     logger.info("Removing all dangling images.")
 
@@ -18,10 +19,10 @@ def remove_all_dangling(logger):
     else:
         logger.debug(f"There isn't any dangling image!")
 
-    logger.info(f"the space reclaimed after removing all dangling images is {delete_images['SpaceReclaimed']}")
+    logger.info(f"The space reclaimed after removing all dangling images is {delete_images['SpaceReclaimed']}")
 
 
-def remove_with_pattern(pattern, exclude, logger):
+def remove_with_pattern(pattern, exclude):
     logger.info(f"Removing all images with pattern -> {pattern}")
     client = docker.from_env()
     images = client.images
@@ -43,7 +44,7 @@ def remove_with_pattern(pattern, exclude, logger):
     logger.info(f"Total {count} images, with pattern -> {pattern}, removed.")
 
 
-def remove_all_from_repository(repository, exclude, logger):
+def remove_all_from_repository(repository, exclude):
     logger.info(f"Removing all images belonging to repostory, {repository}")
     client = docker.from_env()
     images = client.images

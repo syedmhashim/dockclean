@@ -1,7 +1,8 @@
 import docker
+from dockclean.common import LOG as logger
 
 
-def stop_all_running_containers(logger):
+def stop_all_running_containers():
     logger.info("Stopping all running containers.")
     client = docker.from_env()
     containers = client.containers.list()
@@ -18,7 +19,7 @@ def stop_all_running_containers(logger):
     logger.info(f"Total {count} running containers stopped.")
 
 
-def remove_all_stopped_containers(logger):
+def remove_all_stopped_containers():
     logger.info("Removing all stopped containers.")
 
     client = docker.from_env()
@@ -38,6 +39,6 @@ def remove_all_stopped_containers(logger):
     )
 
 
-def remove_all_containers(logger):
-    stop_all_running_containers(logger)
-    remove_all_stopped_containers(logger)
+def remove_all_containers():
+    stop_all_running_containers()
+    remove_all_stopped_containers()
